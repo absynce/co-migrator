@@ -1,0 +1,43 @@
+{
+  "name": "co-migrator",
+  "version": "0.0.0",
+  "description": "Database migration tool for compound.js",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha test/*.test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/absynce/co-migrator.git"
+  },
+  "keywords": [
+    "db",
+    "migration",
+    "database",
+    "compound",
+    "node",
+    "compoundjs",
+    "migrator"
+  ],
+  "author": "Jared M. Smith",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/absynce/co-migrator/issues"
+  },
+  "dependencies": {
+    "compound": "~1.1.7-11",
+    "semver": "~2.2.1",
+    "express": "~3.4.4",
+    "jugglingdb": "~0.2.4",
+    "jugglingdb-mysql": "0.0.3"
+  },
+  "devDependencies": {
+    "should": "~2.1.0",
+    "sinon": "~1.7.3",
+    "grunt": "~0.4.1",
+    "grunt-contrib-jshint": "~0.7.2",
+    "grunt-release": "~0.6.0",
+    "grunt-cafe-mocha": "~0.1.9",
+    "grunt-contrib-watch": "~0.5.3"
+  }
+}
