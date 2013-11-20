@@ -9,7 +9,7 @@ global.Migrator = require('../lib/migrator');
 before(function (done) {
     loadCompound(function (compound) {
         global.db = new Schema('mysql', {
-            database: 'co-migrator-test',
+            database: 'co_migrator_test',
             username: 'root',
         });
         loadSchema(compound, function (compound) {
@@ -23,12 +23,12 @@ function loadSchema(compound, done) {
     compound.orm = {
         _schemas : [ db ]
     };
-    
     done(compound);
 }
 
 function loadCompound(done) {
-    var app = require('compound').createServer();
+    // Create a new instance of compound and assign it to the global scope.
+    global.app = require('compound').createServer();
     app.compound.on('ready', function () {
         done(app.compound);
     });
