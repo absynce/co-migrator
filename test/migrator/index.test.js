@@ -1,5 +1,23 @@
 var path = require('path');
 
+// Define test migration objects.
+var v169mig1 = {
+    name: '1.6.9-mig.1.js',
+    folder: '1.6.9'
+};
+var v170mig1 = {
+    name: '1.7.0-mig.1.js',
+    folder: '1.7.0'
+};
+var v170mig2 = {
+    name: '1.7.0-mig.2.js',
+    folder: '1.7.0'
+};
+var v171mig1 = {
+    name: '1.7.1-mig.1.js',
+    folder: '1.7/1.7.1'
+};
+
 describe('Migrator', function () {
     it('should be an instance of Migrator and have properties', function (done) {
         var migrator = new Migrator(app.compound);
@@ -27,7 +45,46 @@ describe('Migrator', function () {
         done();
     });
 
-    it('should get migrations in test/db/migrations folder passed in');
+    describe('#getMigrations', function () {
+        /*
+         * This will _not_ include 1.6.9-mig.1 since 1.6.9 is > 1.6.9-mig.1.
+         * Including -mig.1 is considered a pre-release.
+         * See https://github.com/isaacs/node-semver#ranges for more info.
+         */
+        it('should get migrations in test/db/migrations ' +
+           'folder from 1.6.9', function (done) {
+               var testPath = path.join(app.compound.root, 'test', 'db', 'migrations');
+               var migrator = new Migrator(app.compound, testPath);
+               
+               // Get migrations >1.6.9.
+               var migrations = migrator.getMigrations('1.6.9', null, testPath);
+
+               migrations.length.should.equal(3);
+               migrations[0].should.include(v170mig1);
+               migrations[1].should.include(v170mig2);
+               migrations[2].should.include(v171mig1);
+               done();
+           });
+
+        /*
+         * Specifying 1.7.0-mig.1 as current version should return
+         * 1.7.0-mig.2 and 1.7.1-mig.1.
+         */
+        it('should get migrations in test/db/migrations ' +
+           'folder from 1.7.0-mig.1', function (done) {
+               var testPath = path.join(app.compound.root, 'test', 'db', 'migrations');
+               var migrator = new Migrator(app.compound, testPath);
+               
+               // Get migrations >1.7.0-mig.1
+               var migrations = migrator.getMigrations('1.7.0-mig.1', null, testPath);
+
+               migrations.length.should.equal(2);
+               migrations[0].should.include(v170mig2);
+               migrations[1].should.include(v171mig1);
+
+               done();
+        });
+    });
     
     it('should have a createMigration method');
 });

@@ -11,6 +11,7 @@ before(function (done) {
         global.db = new Schema('mysql', {
             database: 'co_migrator_test',
             username: 'root',
+            password: 'newage1'
         });
         loadSchema(compound, function (compound) {
             done();

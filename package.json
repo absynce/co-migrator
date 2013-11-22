@@ -29,7 +29,8 @@
     "semver": "~2.2.1",
     "express": "~3.4.4",
     "jugglingdb": "~0.2.4",
-    "jugglingdb-mysql": "0.0.3"
+    "jugglingdb-mysql": "0.0.3",
+    "co-logger": "0.0.7"
   },
   "devDependencies": {
     "should": "~2.1.0",
