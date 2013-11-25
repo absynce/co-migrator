@@ -1,6 +1,6 @@
 module.exports = function (compound, schema, models, done, err) {
     // Put migration logic here.
-    compound.logger.debug('Running migration 1.7.0-01.js');
+    compound.logger.debug('Running migration 1.7.0-mig.1.js');
 
     // Example: renaming a table.
     // Create model with existing name temporarily.

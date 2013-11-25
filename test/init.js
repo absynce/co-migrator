@@ -11,15 +11,17 @@ global.Migrator = require('../lib/migrator');
 before(function (done) {
     loadCompound(function (compound) {
         global.db = new Schema('memory');
+
         loadSchema(compound, function (compound) {
             loadModels(compound, compound.models);
             
-            compound.models.Version.create({
+/*            compound.models.Version.create({
                 version: '1.6.9-mig.1',
                 fileName: '1.6.9/1.6.9-mig.1.js'
             }, function (err, v) {
                 done();
-            });
+            });*/
+            done();
         });
     });
 });
@@ -30,7 +32,9 @@ function loadSchema(compound, done) {
         _schemas : [ db ]
     };
     compound.models = db.models;
-    done(compound);
+    db.automigrate(function () {
+        done(compound);
+    });
 }
 
 function loadCompound(done) {
