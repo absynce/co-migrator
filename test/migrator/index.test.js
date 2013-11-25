@@ -84,6 +84,60 @@ describe('Migrator', function () {
 
                done();
         });
+
+        /*
+         * Specifying _no_ fromVersion, but a toVersion of
+         * 1.7.0-mig.2 should only return migrations to that point.
+         */
+        it('should get migrations in test/db/migrations ' +
+           'folder _to_ 1.7.0-mig.2', function (done) {
+               var testPath = path.join(app.compound.root, 'test', 'db', 'migrations');
+               var migrator = new Migrator(app.compound, testPath);
+               
+               // Get migrations <=1.7.0-mig.2
+               var migrations = migrator.getMigrations(null, '1.7.0-mig.2', testPath);
+
+               migrations.length.should.equal(3);
+               migrations[0].should.include(v169mig1);
+               migrations[1].should.include(v170mig1);
+               migrations[2].should.include(v170mig2);
+
+               done();
+           });
+
+        /*
+         * Specifying _no_ fromVersion, and _no_ toVersion 
+         * should return all migrations.
+         */
+        it('should get all migrations in test/db/migrations ', function (done) {
+               var testPath = path.join(app.compound.root, 'test', 'db', 'migrations');
+               var migrator = new Migrator(app.compound, testPath);
+               
+               // Get all migrations 
+               var migrations = migrator.getMigrations(null, null, testPath);
+
+               migrations.length.should.equal(4);
+               migrations[0].should.include(v169mig1);
+               migrations[1].should.include(v170mig1);
+               migrations[2].should.include(v170mig2);
+               migrations[3].should.include(v171mig1);
+
+               done();
+           });
+    });
+
+    describe('#runMigrations', function () {
+        it('should all run migrations after current version', function (done) { 
+            var testPath = path.join(app.compound.root, 'test', 'db', 'migrations');
+            var migrator = new Migrator(app.compound, testPath);
+
+            migrator.runMigrations(null, function (error) {
+                app.compound.models.Version.max(function (err, maxVersion) {
+                    maxVersion.should.equal('1.7.1-mig.1');
+                    done();
+                });
+            });
+        });
     });
     
     it('should have a createMigration method');

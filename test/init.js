@@ -1,6 +1,8 @@
 require('should');
-var Schema = require('jugglingdb').Schema;
-var schema = require('../db/schema');
+var Schema  = require('jugglingdb').Schema;
+var schema  = require('../db/schema');
+var util    = require('util');
+var version = require('../app/models/version');
 
 global.sinon = require('sinon');
 
@@ -8,13 +10,16 @@ global.Migrator = require('../lib/migrator');
 
 before(function (done) {
     loadCompound(function (compound) {
-        global.db = new Schema('mysql', {
-            database: 'co_migrator_test',
-            username: 'root',
-            password: 'newage1'
-        });
+        global.db = new Schema('memory');
         loadSchema(compound, function (compound) {
-            done();
+            loadModels(compound, compound.models);
+            
+            compound.models.Version.create({
+                version: '1.6.9-mig.1',
+                fileName: '1.6.9/1.6.9-mig.1.js'
+            }, function (err, v) {
+                done();
+            });
         });
     });
 });
@@ -24,6 +29,7 @@ function loadSchema(compound, done) {
     compound.orm = {
         _schemas : [ db ]
     };
+    compound.models = db.models;
     done(compound);
 }
 
@@ -33,4 +39,8 @@ function loadCompound(done) {
     app.compound.on('ready', function () {
         done(app.compound);
     });
+}
+
+function loadModels(compound, models) {
+    version(compound, models.Version);
 }

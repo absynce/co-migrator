@@ -2,7 +2,7 @@
  * Version: Migrator schema model to track database migration changes.
  */
 module.exports = {
-    version: Number,
+    version: String,
     fileName: String,
     appliedOn: {
         type: Date,

@@ -54,4 +54,11 @@ module.exports = function (compound, Migrator) {
 
         return true;
     }
+
+    Migrator.Schema         = Migrator.Schema || { };
+    Migrator.Models         = Migrator.Models || { };
+    Migrator.Models.Version = require('./app/models/version');
+    Migrator.Schema.Version = require('./db/version');
+
+    return Migrator;
 };

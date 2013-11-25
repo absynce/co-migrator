@@ -1,5 +1,5 @@
 module.exports = function (compound) {
     return [
-        require('co-logger')
+        require('co-logger'),
     ];
 };
