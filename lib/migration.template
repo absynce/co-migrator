@@ -1,0 +1,9 @@
+// Migration {{version}}
+module.exports = function (compound, schema, models, done) {
+    compound.logger.debug('Running migration {{version}}');
+
+    // Put custom migration logic here.
+
+    // Don't forget to call done();
+    done();
+};

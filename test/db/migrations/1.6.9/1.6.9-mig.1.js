@@ -1,7 +1,7 @@
 var postSchema = require('../../schemas/post');
 var util       = require('util');
 
-module.exports = function (compound, schema, models, done, err) {
+module.exports = function (compound, schema, models, done) {
     // Example migration 1.6.9-01.js
     compound.logger.debug('Running migration 1.6.9-mig.1.js');
 
@@ -42,10 +42,8 @@ module.exports = function (compound, schema, models, done, err) {
 
     // TODO: Make this an async lib.
     function async(tasks, done) {
-        compound.logger.debug('Async tasks: ', tasks);
-
         function runTask(task) {
-            compound.logger.debug('running task', util.inspect(task));
+            compound.logger.debug('Running task', util.inspect(task));
             if (task) {
                 task(function (err) {
                     if (err) { return done(err); }
