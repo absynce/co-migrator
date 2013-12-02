@@ -1,19 +1,17 @@
-module.exports = function (compound, schema, models, done, err) {
-    // Put migration logic here.
-    compound.logger.debug('Running migration 1.7.1-mig.1.js');
+// Migration 1.7.1-mig.1
+module.exports = function (compound, schema, models) {
+  return {
+    up   : function (done) {
+      compound.logger.debug('Running migration 1.7.1-mig.1');
 
-    // Example: renaming a table.
-    // Create model with existing name temporarily.
-    // automigrate
-    // Update new name with old one using schema.
+      // Put custom migration logic here.
 
-    // If updating schema manually, verify it worked at the end.
-    if (!schema.isActual) {
-        compound.logger.debug('Schema is not actual!');
-        err();
-    } else {
-        compound.logger.debug('Schema is actual!');
+      // Don't forget to call done();
+      done();
+    },
+    down : function (done) {
+      // Undo stuff.
+      done();
     }
-
-    done();
+  };
 };

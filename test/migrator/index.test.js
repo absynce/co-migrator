@@ -139,6 +139,27 @@ describe('Migrator', function () {
             });
         });
     });
+
+    it('should return 1.7.1-mig.1 when getting max migration', function (done) {
+        var testPath = path.join(app.compound.root, 'test', 'db', 'migrations');
+        var migrator = new Migrator(app.compound, testPath);
+       
+        var maxMigration = migrator.maxMigration();
+
+        maxMigration.version.should.equal('1.7.1-mig.1');
+        done();
+    });
     
-    it('should have a createMigration method');
+    describe('#createMigration', function () {
+        it('should create a new migration incremented from current version, ', function (done) {
+            var resultPath = path.join(app.compound.root, 'results', 'migrations');
+            var testPath = path.join(app.compound.root, 'test', 'db', 'migrations');
+            var migrator   = new Migrator(app.compound, testPath);
+
+            migrator.createMigration('1.7.1-beta', resultPath, function (err, migration) {
+                app.compound.logger.debug('migration', migration);
+                done();
+            });
+        });
+    });
 });

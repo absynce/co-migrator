@@ -1,19 +1,44 @@
 var postSchema = require('../../schemas/post');
 var util       = require('util');
 
-module.exports = function (compound, schema, models, done) {
-    // Example migration 1.6.9-01.js
-    compound.logger.debug('Running migration 1.6.9-mig.1.js');
+module.exports = function (compound, schema, models) {
+    return {
+        up   : function (done) {
+            // Example migration 1.6.9-01.js
+            compound.logger.debug('Running migration 1.6.9-mig.1.js');
 
-    // Create Posts table in schema
-    var Posts = schema.define('Posts', postSchema);
+            // Create Posts table in schema
+            var Posts = schema.define('Posts', postSchema);
 
-    async([
-        schema.automigrate.bind(schema),
-        checkActual,
-        createPosts
-    ], done);
+            async([
+                schema.automigrate.bind(schema),
+                checkActual,
+                createPosts
+            ], done);
 
+            function createPosts(done) {
+                async([
+                    function (cb) {
+                        Posts.create({
+                            name        : 'My First Blog Post',
+                            description : 'My first blog post evar!!'
+                        }, cb);
+                    },
+                    function (cb) {
+                        Posts.create({
+                            name        : 'My First Pony',
+                            description : 'My first pony ride!'
+                        }, cb);
+                    }
+                ], done);
+            }
+        },
+        down : function (done) {
+            // Remove table/schema.
+            done();
+        }
+    };
+       
     function checkActual(done) {
         schema.isActual(function (err, actual) {
             if (!actual) {
@@ -22,23 +47,6 @@ module.exports = function (compound, schema, models, done) {
             done();
         });
     }    
-
-    function createPosts(done) {
-        async([
-            function (cb) {
-        Posts.create({
-            name        : 'My First Blog Post',
-            description : 'My first blog post evar!!'
-        }, cb);
-            },
-            function (cb) {
-                Posts.create({
-                    name        : 'My First Pony',
-                    description : 'My first pony ride!'
-                }, cb);
-            }
-        ], done);
-    }
 
     // TODO: Make this an async lib.
     function async(tasks, done) {

@@ -30,7 +30,9 @@
     "express": "~3.4.4",
     "jugglingdb": "~0.2.4",
     "jugglingdb-mysql": "0.0.3",
-    "co-logger": "0.0.7"
+    "co-logger": "0.0.7",
+    "mustache": "~0.7.3",
+    "mkdirp": "~0.3.5"
   },
   "devDependencies": {
     "should": "~2.1.0",
