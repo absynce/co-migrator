@@ -1,5 +1,5 @@
 /*
- * Version: Migrator schema model to track database migration changes.
+ * Migration: Migrator schema model to track database migration changes.
  */
 module.exports = {
     version: String,

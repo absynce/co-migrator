@@ -1,8 +1,8 @@
 require('should');
-var Schema  = require('jugglingdb').Schema;
-var schema  = require('../db/schema');
-var util    = require('util');
-var version = require('../app/models/version');
+var Schema    = require('jugglingdb').Schema;
+var schema    = require('../db/schema');
+var util      = require('util');
+var migration = require('../app/models/migration');
 
 global.sinon = require('sinon');
 
@@ -46,5 +46,5 @@ function loadCompound(done) {
 }
 
 function loadModels(compound, models) {
-    version(compound, models.Version);
+    migration(compound, models.Migration);
 }

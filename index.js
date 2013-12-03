@@ -1,13 +1,22 @@
-module.exports = function (compound, Migrator) {
+var Migrator = require('./lib/migrator');
+var path     = require('path');
+
+function init(compound) {
     var app = compound.app;
     
     compound.tools.migrator = function m() {
-        var action = process.argv[3] || 'up';
+        var action   = process.argv[3] || 'up';
+        var migrator = new Migrator(compound);
         switch (action) {
-        case 'up':
-            var migrator  = new Migrator(compound);
+        case 'up'   :
+        case 'down' :
             var toVersion = process.argv.length > 4 ? process.argv[4] : null;
-            migrator.runMigrations(toVersion, process.exit); 
+            migrator.runMigrations(toVersion, action, process.exit); 
+            break;
+        case 'create':
+            var packPath = path.join(process.cwd(), 'package.json');
+            var version  = require(packPath).version;
+            migrator.createMigration(version, process.exit);
             break;
         default:
             console.log('Unknown action', action);
@@ -54,11 +63,13 @@ module.exports = function (compound, Migrator) {
 
         return true;
     }
+}
 
-    Migrator.Schema         = Migrator.Schema || { };
-    Migrator.Models         = Migrator.Models || { };
-    Migrator.Models.Version = require('./app/models/version');
-    Migrator.Schema.Version = require('./db/version');
 
-    return Migrator;
-};
+Migrator.init             = init;
+Migrator.Schema           = Migrator.Schema || { };
+Migrator.Schema.Migration = require('./db/migration');
+Migrator.Models           = Migrator.Models || { };
+Migrator.Models.Migration = require('./app/models/migration');
+
+module.exports = Migrator;

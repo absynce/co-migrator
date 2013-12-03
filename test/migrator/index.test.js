@@ -1,3 +1,5 @@
+/* jshint expr:true */
+var fs   = require('fs');
 var path = require('path');
 
 // Define test migration objects.
@@ -132,7 +134,7 @@ describe('Migrator', function () {
             var migrator = new Migrator(app.compound, testPath);
 
             migrator.runMigrations(null, function (error) {
-                app.compound.models.Version.max(function (err, maxVersion) {
+                app.compound.models.Migration.maxVersion(function (err, maxVersion) {
                     maxVersion.should.equal('1.7.1-mig.1');
                     done();
                 });
@@ -158,6 +160,9 @@ describe('Migrator', function () {
 
             migrator.createMigration('1.7.1-beta', resultPath, function (err, migration) {
                 app.compound.logger.debug('migration', migration);
+                var migrationPath   = path.join(resultPath, migration.folder, migration.name);
+                var migrationExists = fs.existsSync(migrationPath);
+                migrationExists.should.be.true;
                 done();
             });
         });

@@ -1,6 +1,6 @@
-var version = require('./version');
+var migration = require('./migration');
 
 module.exports = function (db) {
-    db.define('Version', version);
+    db.define('Migration', migration);
     return db;
 };
