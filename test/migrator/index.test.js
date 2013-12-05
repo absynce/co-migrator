@@ -19,6 +19,10 @@ var v171mig1 = {
     name: '1.7.1-mig.1.js',
     folder: '1.7/1.7.1'
 };
+var v171mig2 = {
+    name: '1.7.1-mig.2.js',
+    folder: '1.7/1.7.1'
+};
 
 describe('Migrator', function () {
     it('should be an instance of Migrator and have properties', function (done) {
@@ -61,10 +65,11 @@ describe('Migrator', function () {
                // Get migrations >1.6.9.
                var migrations = migrator.getMigrations('1.6.9', null, testPath);
 
-               migrations.length.should.equal(3);
+               migrations.length.should.equal(4);
                migrations[0].should.include(v170mig1);
                migrations[1].should.include(v170mig2);
                migrations[2].should.include(v171mig1);
+               migrations[3].should.include(v171mig2);
                done();
            });
 
@@ -80,9 +85,10 @@ describe('Migrator', function () {
                // Get migrations >1.7.0-mig.1
                var migrations = migrator.getMigrations('1.7.0-mig.1', null, testPath);
 
-               migrations.length.should.equal(2);
+               migrations.length.should.equal(3);
                migrations[0].should.include(v170mig2);
                migrations[1].should.include(v171mig1);
+               migrations[2].should.include(v171mig2);
 
                done();
         });
@@ -118,11 +124,12 @@ describe('Migrator', function () {
                // Get all migrations 
                var migrations = migrator.getMigrations(null, null, testPath);
 
-               migrations.length.should.equal(4);
+               migrations.length.should.equal(5);
                migrations[0].should.include(v169mig1);
                migrations[1].should.include(v170mig1);
                migrations[2].should.include(v170mig2);
                migrations[3].should.include(v171mig1);
+               migrations[4].should.include(v171mig2);
 
                done();
            });
@@ -148,7 +155,7 @@ describe('Migrator', function () {
        
         var maxMigration = migrator.maxMigration();
 
-        maxMigration.version.should.equal('1.7.1-mig.1');
+        maxMigration.version.should.equal('1.7.1-mig.2');
         done();
     });
     
