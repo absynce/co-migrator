@@ -38,3 +38,42 @@ A new migration will be saved in `db/migrations/[version]`. If a migration alrea
 Example:
 
 If the application is on version `1.2.3` and a migration is in `db/migrations/1.2/1.2.3` called `1.2.3-mig.1.js`, a new migration `1.2.3-mig.2.js` will be placed in the same directory.
+
+Migration example:
+
+`db/schemas/post.js`:
+```javascript
+module.exports = {
+    name        : String,
+    description : String,
+    writtenOn   : {
+        type: Date,
+        default: function () { return new Date(); }
+    }
+};
+```
+
+`db/migrations/1.2/1.2.3/1.2.3-mig.1.js`:
+```javascript
+var postSchema = require('../../schemas/post');
+
+module.exports = function (compound, schema, models) {
+    return {
+        up   : function (done) {
+            var Posts = schema.define('Posts', postSchema);
+            
+            schema.autoupdate(function (err) {
+                if (err) { return done(err); }
+                Posts.create({
+                            name        : 'My First Blog Post',
+                            description : 'My first blog post evar!!'
+                }, done);
+            });
+        },
+        down : function (done) {
+            // Not used.
+            done();
+        }
+    };
+};
+```
