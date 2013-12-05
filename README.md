@@ -77,3 +77,13 @@ module.exports = function (compound, schema, models) {
     };
 };
 ```
+
+##Run Migrations
+
+Run migrations:
+
+    compound m
+    
+Rollback migrations:
+
+    compound m down
