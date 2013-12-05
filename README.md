@@ -1,4 +1,40 @@
 co-migrator
 ===========
 
-Database migration tool for use in compound
+Database migration tool for use in [compound.js](https://github.com/1602/compound).
+
+
+Installation
+============
+
+Step 1. Install using npm:
+
+    npm install co-migrator --save
+
+Step 2. Add `co-migrator` to `config/autoload.js`, for example:
+
+```javascript
+module.exports = function (compound) {
+    return [
+        'ejs-ext',
+        'jugglingdb',
+        'seedjs',
+        'co-logger',
+        'co-migrator'
+    ].map(require);
+};
+```
+
+
+Usage
+=====
+
+To create a new migration use:
+
+    compound m create
+    
+A new migration will be saved in `db/migrations/[version]`. If a migration already exists for the current version of the application, a new migration will be incremented from the highest version of the current migration. 
+
+Example:
+
+If the application is on version `1.2.3` and a migration is in `db/migrations/1.2/1.2.3` called `1.2.3-mig.1.js`, a new migration `1.2.3-mig.2.js` will be placed in the same directory.
