@@ -25,6 +25,18 @@ module.exports = function (compound) {
 };
 ```
 
+Step 3. Add schema to `db/schema.js`:
+
+```javascript
+var migration = require('co-migrator').Schema.Migration;
+schema.define('Migration', migration);
+```
+
+Step 4. Add model to `app/models/migration.js`:
+
+```javascript
+module.exports = require('co-migrator').Models.Migration;
+```
 
 Usage
 =====
