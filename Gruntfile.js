@@ -38,6 +38,7 @@ module.exports = function (grunt) {
     // Override some properties to prepare release.
     grunt.registerTask('prepRelease', function (type) {
         grunt.config.set('release.options.bump', true);
+        grunt.config.set('release.options.npm', false);
         grunt.config.set('release.options.tag', false);
         
         if (type === null) {

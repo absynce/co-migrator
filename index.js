@@ -11,12 +11,12 @@ function init(compound) {
         case 'up'   :
         case 'down' :
             var toVersion = process.argv.length > 4 ? process.argv[4] : null;
-            migrator.runMigrations(toVersion, action, process.exit); 
+            migrator.runMigrations(toVersion, action, exitProcess);
             break;
         case 'create':
             var packPath = path.join(process.cwd(), 'package.json');
             var version  = require(packPath).version;
-            migrator.createMigration(version, process.exit);
+            migrator.createMigration(version, exitProcess);
             break;
         default:
             console.log('Unknown action', action);
@@ -63,6 +63,12 @@ function init(compound) {
 
         return true;
     }
+
+    function exitProcess(err) {
+        var exitCode = 0;
+        if (err) { exitCode = 1; }
+        process.exit(exitCode);
+    }       
 }
 
 
