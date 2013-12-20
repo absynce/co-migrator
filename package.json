@@ -4,7 +4,7 @@
   "description": "Database migration tool for compound.js",
   "main": "index.js",
   "scripts": {
-    "test": "mocha test/*.test.js"
+    "test": "grunt"
   },
   "repository": {
     "type": "git",
