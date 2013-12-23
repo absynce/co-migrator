@@ -184,7 +184,7 @@ describe('Migrator', function () {
 
             migrator.runMigrations(null, 'down', function (error) {
                app.compound.models.Migration.maxVersion(function (err, maxVersion) {
-                    if (maxVersion == null) {
+                    if (maxVersion === null) {
                         maxVersion = '';
                     }
                     maxVersion.should.equal('');
@@ -196,7 +196,7 @@ describe('Migrator', function () {
 
         it('should revert all migrations', function (done) { 
             var testPath = path.join(app.compound.root, 'test', 'db', 'migrations');
-            var migrator = new Migrator(app.compound, testPath);
+            var migrator = new Migrator(app.compolund, testPath);
 
             migrator.runMigrations(null, 'up', function (error) {
                app.compound.models.Migration.maxVersion(function (err, maxVersion) {
