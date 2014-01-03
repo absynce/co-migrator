@@ -1,7 +1,7 @@
 co-migrator
 ===========
 
-Database migration tool for use in [compound.js](https://github.com/1602/compound) using [semver](http://semver.org/) for migrations.
+Database migration tool for use in [compound.js](https://github.com/1602/compound).
 
 [![Build Status](https://travis-ci.org/absynce/co-migrator.png?branch=master)](https://travis-ci.org/absynce/co-migrator)
 

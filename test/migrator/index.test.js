@@ -135,19 +135,9 @@ describe('Migrator', function () {
            });
     });
 
-    describe('#runMigrations', function () {
-        it('should all run migrations after current version', function (done) { 
-            var testPath = path.join(app.compound.root, 'test', 'db', 'migrations');
-            var migrator = new Migrator(app.compound, testPath);
 
-            migrator.runMigrations(null, function (error) {
-                app.compound.models.Migration.maxVersion(function (err, maxVersion) {
-                    maxVersion.should.equal('1.7.1-mig.1');
-                    done();
-                });
-            });
-        });
-    });
+
+
 
     it('should return 1.7.1-mig.1 when getting max migration', function (done) {
         var testPath = path.join(app.compound.root, 'test', 'db', 'migrations');
@@ -173,5 +163,48 @@ describe('Migrator', function () {
                 done();
             });
         });
+    });
+
+    describe('#runMigrations', function () {
+        it('should all run migrations after current version', function (done) { 
+            var testPath = path.join(app.compound.root, 'test', 'db', 'migrations');
+            var migrator = new Migrator(app.compound, testPath);
+
+            migrator.runMigrations(null, function (error) {
+                app.compound.models.Migration.maxVersion(function (err, maxVersion) {
+                    maxVersion.should.equal('1.7.1-mig.1');
+                    done();
+                });
+            });
+        });
+
+        it('should revert all migrations', function (done) { 
+            var testPath = path.join(app.compound.root, 'test', 'db', 'migrations');
+            var migrator = new Migrator(app.compound, testPath);
+
+            migrator.runMigrations(null, 'down', function (error) {
+               app.compound.models.Migration.maxVersion(function (err, maxVersion) {
+                    if (maxVersion === null) {
+                        maxVersion = '';
+                    }
+                    maxVersion.should.equal('');
+                    done();
+                });
+            });
+        });
+
+
+        it('should all run migrations after current version given "up" as an arg and verify the max version', function (done) { 
+            var testPath = path.join(app.compound.root, 'test', 'db', 'migrations');
+            var migrator = new Migrator(app.compound, testPath);
+
+            migrator.runMigrations(null, 'up', function (error) {
+               app.compound.models.Migration.maxVersion(function (err, maxVersion) {
+                    maxVersion.should.equal('1.7.1-mig.1');
+                    done();
+                });
+            });
+        });
+
     });
 });

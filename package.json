@@ -1,6 +1,6 @@
 {
   "name": "co-migrator",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Database migration tool for compound.js",
   "main": "index.js",
   "scripts": {
@@ -19,7 +19,9 @@
     "compoundjs",
     "migrator"
   ],
-  "author": "Jared M. Smith",
+  "author": {
+    "name": "Jared M. Smith"
+  },
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/absynce/co-migrator/issues"
@@ -42,5 +44,14 @@
     "grunt-release": "~0.6.0",
     "grunt-cafe-mocha": "~0.1.9",
     "grunt-contrib-watch": "~0.5.3"
-  }
+  },
+  "readme": "co-migrator\n===========\n\nDatabase migration tool for use in [compound.js](https://github.com/1602/compound).\n\n\nInstallation\n============\n\nStep 1. Install using npm:\n\n    npm install co-migrator --save\n\nStep 2. Add `co-migrator` to `config/autoload.js`, for example:\n\n```javascript\nmodule.exports = function (compound) {\n    return [\n        'ejs-ext',\n        'jugglingdb',\n        'seedjs',\n        'co-logger',\n        'co-migrator'\n    ].map(require);\n};\n```\n\nStep 3. Add schema to `db/schema.js`:\n\n```javascript\nvar migration = require('co-migrator').Schema.Migration;\nschema.define('Migration', migration);\n```\n\nStep 4. Add model to `app/models/migration.js`:\n\n```javascript\nmodule.exports = require('co-migrator').Models.Migration;\n```\n\nUsage\n=====\n\n##Create a new migration:\n\n    compound m create\n    \nA new migration will be saved in `db/migrations/[version]`. If a migration already exists for the current version of the application, a new migration will be incremented from the highest version of the current migration. \n\nExample:\n\nIf the application is on version `1.2.3` and a migration is in `db/migrations/1.2/1.2.3` called `1.2.3-mig.1.js`, a new migration `1.2.3-mig.2.js` will be placed in the same directory.\n\n##Migration example:\n\n`db/schemas/post.js`:\n```javascript\nmodule.exports = {\n    name        : String,\n    description : String,\n    writtenOn   : {\n        type: Date,\n        default: function () { return new Date(); }\n    }\n};\n```\n\n`db/migrations/1.2/1.2.3/1.2.3-mig.1.js`:\n```javascript\nvar postSchema = require('../../schemas/post');\n\nmodule.exports = function (compound, schema, models) {\n    return {\n        up   : function (done) {\n            var Posts = schema.define('Posts', postSchema);\n            \n            schema.autoupdate(function (err) {\n                if (err) { return done(err); }\n                Posts.create({\n                            name        : 'My First Blog Post',\n                            description : 'My first blog post evar!!'\n                }, done);\n            });\n        },\n        down : function (done) {\n            // Not used.\n            done();\n        }\n    };\n};\n```\n\n##Run Migrations\n\nRun migrations:\n\n    compound m\n    \nRollback migrations:\n\n    compound m down\n",
+  "readmeFilename": "README.md",
+  "homepage": "https://github.com/absynce/co-migrator",
+  "_id": "co-migrator@0.0.4",
+  "dist": {
+    "shasum": "f6331a6b6801c5c356112aee61f7dd35e6c867b3"
+  },
+  "_from": "co-migrator@0.0.4",
+  "_resolved": "https://registry.npmjs.org/co-migrator/-/co-migrator-0.0.4.tgz"
 }
