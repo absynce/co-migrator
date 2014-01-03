@@ -194,7 +194,7 @@ describe('Migrator', function () {
         });
 
 
-        it('should all run migrations after current version given "up" as an arg and verify the max version.', function (done) { 
+        it('should all run migrations after current version given "up" as an arg and verify the max version', function (done) { 
             var testPath = path.join(app.compound.root, 'test', 'db', 'migrations');
             var migrator = new Migrator(app.compound, testPath);
 
