@@ -63,7 +63,7 @@ describe('Migrator', function () {
                var migrator = new Migrator(app.compound, testPath);
                
                // Get migrations >1.6.9.
-               var migrations = migrator.getMigrations('1.6.9', null, testPath);
+               var migrations = migrator.getMigrations(null, null,'1.6.9', null, testPath);
 
                migrations.length.should.equal(4);
                migrations[0].should.include(v170mig1);
@@ -83,7 +83,7 @@ describe('Migrator', function () {
                var migrator = new Migrator(app.compound, testPath);
                
                // Get migrations >1.7.0-mig.1
-               var migrations = migrator.getMigrations('1.7.0-mig.1', null, testPath);
+               var migrations = migrator.getMigrations(null, null,'1.7.0-mig.1', null, testPath);
 
                migrations.length.should.equal(3);
                migrations[0].should.include(v170mig2);
@@ -103,7 +103,7 @@ describe('Migrator', function () {
                var migrator = new Migrator(app.compound, testPath);
                
                // Get migrations <=1.7.0-mig.2
-               var migrations = migrator.getMigrations(null, '1.7.0-mig.2', testPath);
+               var migrations = migrator.getMigrations(null, null, null, '1.7.0-mig.2', testPath);
 
                migrations.length.should.equal(3);
                migrations[0].should.include(v169mig1);
@@ -122,7 +122,7 @@ describe('Migrator', function () {
                var migrator = new Migrator(app.compound, testPath);
                
                // Get all migrations 
-               var migrations = migrator.getMigrations(null, null, testPath);
+               var migrations = migrator.getMigrations(null, null, null, null, testPath);
 
                migrations.length.should.equal(5);
                migrations[0].should.include(v169mig1);
@@ -169,24 +169,21 @@ describe('Migrator', function () {
         it('should all run migrations after current version', function (done) { 
             var testPath = path.join(app.compound.root, 'test', 'db', 'migrations');
             var migrator = new Migrator(app.compound, testPath);
-
+            var maxVersion = migrator.maxMigration();
             migrator.runMigrations(null, function (error) {
-                app.compound.models.Migration.maxVersion(function (err, maxVersion) {
-                    maxVersion.should.equal('1.7.1-mig.1');
+                    maxVersion.version.should.equal('1.7.1-mig.2');
                     done();
-                });
             });
         });
 
         it('should revert all migrations', function (done) { 
             var testPath = path.join(app.compound.root, 'test', 'db', 'migrations');
             var migrator = new Migrator(app.compound, testPath);
+            var maxVersion = migrator.maxMigration();
 
             migrator.runMigrations(null, 'down', function (error) {
-               app.compound.models.Migration.maxVersion(function (err, maxVersion) {
-                    maxVersion.should.equal(null);
+                    maxVersion.version.should.equal('1.7.1-mig.2');
                     done();
-                });
             });
         });
 
@@ -194,12 +191,11 @@ describe('Migrator', function () {
         it('should all run migrations after current version given "up" as an arg and verify the max version', function (done) { 
             var testPath = path.join(app.compound.root, 'test', 'db', 'migrations');
             var migrator = new Migrator(app.compound, testPath);
+            var maxVersion = migrator.maxMigration();
 
             migrator.runMigrations(null, 'up', function (error) {
-               app.compound.models.Migration.maxVersion(function (err, maxVersion) {
-                    maxVersion.should.equal('1.7.1-mig.1');
+                    maxVersion.version.should.equal('1.7.1-mig.2');
                     done();
-                });
             });
         });
 
