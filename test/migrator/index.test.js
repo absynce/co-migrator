@@ -184,10 +184,7 @@ describe('Migrator', function () {
 
             migrator.runMigrations(null, 'down', function (error) {
                app.compound.models.Migration.maxVersion(function (err, maxVersion) {
-                    if (maxVersion === null) {
-                        maxVersion = '';
-                    }
-                    maxVersion.should.equal('');
+                    maxVersion.should.equal(null);
                     done();
                 });
             });
