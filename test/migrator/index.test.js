@@ -199,5 +199,61 @@ describe('Migrator', function () {
             });
         });
 
+
+        it('should run down migrations from maxVersion to 1.7.0-mig.2', function (done) { 
+            var testPath = path.join(app.compound.root, 'test', 'db', 'migrations');
+            var migrator = new Migrator(app.compound, testPath);
+            var maxVersion = migrator.maxMigration();
+            var migrations = migrator.getMigrations('down', '1.7.1-mig.2', '1.7.0-mig.2', testPath);
+ 
+            migrations.forEach(function(mig, index){
+                migrator.runMigration(mig, 'down', false, function(error) {
+                    if (index == 0) {
+                        mig.version.should.equal(maxVersion.version);
+                    } else if (index  == migrations.length  - 1) {
+                        mig.version.should.equal('1.7.0-mig.2');
+                        done();
+                    }
+                });
+            })
+
+        });
+
+        it('should run down migrations from maxVersion to 1.7.1-mig.1', function (done) { 
+            var testPath = path.join(app.compound.root, 'test', 'db', 'migrations');
+            var migrator = new Migrator(app.compound, testPath);
+            var maxVersion = migrator.maxMigration();
+            var migrations = migrator.getMigrations('down', maxVersion.version, '1.7.1-mig.1', testPath);
+ 
+            migrations.forEach(function(mig, index){
+                migrator.runMigration(mig, 'down', false, function(error) {
+                    if (index == 0) {
+                        mig.version.should.equal(maxVersion.version);
+                    } else if (index  == migrations.length  - 1) {
+                        mig.version.should.equal('1.7.1-mig.1');
+                        done();
+                    }
+                });
+            })
+
+        });
+
+        it('should run down migrations from maxVersion(1.7.1-mig.2) to 1.7.1-mig.2', function (done) { 
+            var testPath = path.join(app.compound.root, 'test', 'db', 'migrations');
+            var migrator = new Migrator(app.compound, testPath);
+            var maxVersion = migrator.maxMigration();
+            var migrations = migrator.getMigrations('down', maxVersion.version, '1.7.1-mig.2', testPath);
+            console.log(migrations);
+            migrations.forEach(function(mig, index){
+                migrator.runMigration(mig, 'down', false,function(error) {
+                    if (index  == migrations.length  - 1) {
+                        mig.version.should.equal('1.7.1-mig.2');
+                        done();
+                    }
+                });
+            })
+
+        });
+
     });
 });
