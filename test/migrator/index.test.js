@@ -208,14 +208,14 @@ describe('Migrator', function () {
  
             migrations.forEach(function(mig, index){
                 migrator.runMigration(mig, 'down', false, function(error) {
-                    if (index == 0) {
+                    if (index === 0) {
                         mig.version.should.equal(maxVersion.version);
                     } else if (index  == migrations.length  - 1) {
                         mig.version.should.equal('1.7.0-mig.2');
                         done();
                     }
                 });
-            })
+            });
 
         });
 
@@ -227,14 +227,14 @@ describe('Migrator', function () {
  
             migrations.forEach(function(mig, index){
                 migrator.runMigration(mig, 'down', false, function(error) {
-                    if (index == 0) {
+                    if (index === 0) {
                         mig.version.should.equal(maxVersion.version);
                     } else if (index  == migrations.length  - 1) {
                         mig.version.should.equal('1.7.1-mig.1');
                         done();
                     }
                 });
-            })
+            });
 
         });
 
@@ -246,12 +246,12 @@ describe('Migrator', function () {
             console.log(migrations);
             migrations.forEach(function(mig, index){
                 migrator.runMigration(mig, 'down', false,function(error) {
-                    if (index  == migrations.length  - 1) {
+                    if (index  === migrations.length  - 1) {
                         mig.version.should.equal('1.7.1-mig.2');
                         done();
                     }
                 });
-            })
+            });
 
         });
 
