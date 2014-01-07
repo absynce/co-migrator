@@ -12,7 +12,7 @@ module.exports = function (compound, Migration) {
                 if (err) { return done(err); }
                     var versionNames   = migrations.map(function (m) { return m.version; });
                     maxVersion = semver.maxSatisfying(versionNames, ''); // Get highest version.
-                    done(null, maxVersion, migrations.length);
+                    done(null, maxVersion);
             });
         };
 
