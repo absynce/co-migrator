@@ -10,7 +10,6 @@ function init(compound) {
         switch (action) {
         case 'up'   :
         case 'down' :
-            console.log(action);
             var toVersion = process.argv.length > 4 ? process.argv[4] : null;
             migrator.runMigrations(toVersion, action, exitProcess);
             break;
