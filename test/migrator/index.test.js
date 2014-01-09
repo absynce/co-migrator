@@ -243,7 +243,6 @@ describe('Migrator', function () {
             var migrator = new Migrator(app.compound, testPath);
             var maxVersion = migrator.maxMigration();
             var migrations = migrator.getMigrations('down', maxVersion.version, '1.7.1-mig.2', testPath);
-            console.log(migrations);
             migrations.forEach(function(mig, index){
                 migrator.runMigration(mig, 'down', false,function(error) {
                     if (index  === migrations.length  - 1) {
