@@ -255,5 +255,17 @@ describe('Migrator', function () {
 
         });
 
+        it('should run runMigrations from maxVersion to 1.7.0-mig.1', function (done) { 
+            var testPath = path.join(app.compound.root, 'test', 'db', 'migrations');
+            var migrator = new Migrator(app.compound, testPath);
+            var Migration = app.compound.models.Migration;
+            migrator.runMigrations('1.7.0-mig.2', 'down', function() {
+                Migration.maxVersion(function(err, version){
+                    version.should.equal('1.7.0-mig.1');
+                    done();
+                });
+            });
+        });
+
     });
 });
