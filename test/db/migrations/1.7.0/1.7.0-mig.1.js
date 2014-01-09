@@ -20,6 +20,7 @@ module.exports = function (compound, schema, models) {
         },
         down : function (done) {
             // Undo table rename.
+            done();
         }
     };
 };
