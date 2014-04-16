@@ -10,13 +10,9 @@ module.exports = function (compound, Migration) {
 
             Migration.all({where: {active: true}},function (err, migrations) {
                 if (err) { return done(err); }
-                if (migrations) {
                     var versionNames   = migrations.map(function (m) { return m.version; });
                     maxVersion = semver.maxSatisfying(versionNames, ''); // Get highest version.
                     done(null, maxVersion);
-                } else {
-                    done(null, '');
-                }
             });
         };
 
