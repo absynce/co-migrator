@@ -44,6 +44,10 @@ Usage
 ##Create a new migration:
 
     compound m create
+
+    You can also specify the schema(currently defaults to mysql):
+
+    compound m create mongodb
     
 A new migration will be saved in `db/migrations/[version]`. If a migration already exists for the current version of the application, a new migration will be incremented from the highest version of the current migration. 
 
@@ -99,3 +103,6 @@ Run migrations:
 Rollback migrations:
 
     compound m down
+
+*You can also specify schema
+    compound m down myql
