@@ -45,7 +45,7 @@ Usage
 
     compound m create
 
-    You can also specify the schema(currently defaults to mysql):
+    You may also specify the schema(currently defaults to mysql):
 
     compound m create mongodb
     
@@ -103,6 +103,7 @@ Run migrations:
 Rollback migrations:
 
     compound m down
+    
+    You can also specify schema
 
-*You can also specify schema
     compound m down myql
