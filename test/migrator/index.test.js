@@ -45,7 +45,7 @@ describe('Migrator', function () {
 
     it('should have a path variable set to variable if passed in', function (done) {
         var testPath = path.join(app.compound.root, 'test', 'db', 'migrations');
-        var migrator = new Migrator(app.compound, 'mysql',,testPath);
+        var migrator = new Migrator(app.compound, 'mysql', testPath);
 
         migrator.path.should.equal(testPath);
         done();
@@ -60,7 +60,7 @@ describe('Migrator', function () {
         it('should get migrations in test/db/migrations ' +
            'folder from 1.6.9', function (done) {
                var testPath = path.join(app.compound.root, 'test', 'db', 'migrations');
-               var migrator = new Migrator(app.compound, 'mysql',testPath);
+               var migrator = new Migrator(app.compound, 'mysql', testPath);
                
                // Get migrations >1.6.9.
                var migrations = migrator.getMigrations(null,'1.6.9', null, testPath);
@@ -80,7 +80,7 @@ describe('Migrator', function () {
         it('should get migrations in test/db/migrations ' +
            'folder from 1.7.0-mig.1', function (done) {
                var testPath = path.join(app.compound.root, 'test', 'db', 'migrations');
-               var migrator = new Migrator(app.compound,'mysql',testPath);
+               var migrator = new Migrator(app.compound,'mysql', testPath);
                
                // Get migrations >1.7.0-mig.1
                var migrations = migrator.getMigrations(null,'1.7.0-mig.1', null, testPath);
@@ -153,7 +153,7 @@ describe('Migrator', function () {
         it('should create a new migration incremented from current version, ', function (done) {
             var resultPath = path.join(app.compound.root, 'results', 'migrations');
             var testPath = path.join(app.compound.root, 'test', 'db', 'migrations');
-            var migrator   = new Migrator(app.compound, 'mysql',testPath);
+            var migrator   = new Migrator(app.compound, 'mysql', testPath);
 
             migrator.createMigration('1.7.1-beta', resultPath, function (err, migration) {
                 app.compound.logger.debug('migration', migration);
@@ -168,7 +168,7 @@ describe('Migrator', function () {
     describe('#runMigrations', function () {
         it('should all run migrations after current version', function (done) { 
             var testPath = path.join(app.compound.root, 'test', 'db', 'migrations');
-            var migrator = new Migrator(app.compound, 'mysql',testPath);
+            var migrator = new Migrator(app.compound, 'mysql', testPath);
             var maxVersion = migrator.maxMigration();
             migrator.runMigrations(null, function (error) {
                     maxVersion.version.should.equal('1.7.1-mig.2');
@@ -178,7 +178,7 @@ describe('Migrator', function () {
 
         it('should revert all migrations', function (done) { 
             var testPath = path.join(app.compound.root, 'test', 'db', 'migrations');
-            var migrator = new Migrator(app.compound, 'mysql',testPath);
+            var migrator = new Migrator(app.compound, 'mysql', testPath);
             var maxVersion = migrator.maxMigration();
 
             migrator.runMigrations(null, 'down', function (error) {
