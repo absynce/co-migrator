@@ -94,7 +94,7 @@ module.exports = function (compound, schema, models) {
 };
 ```
 
-##Run Migrations
+##Run Migrations(you may specify schema)
 
 Run migrations:
 
@@ -104,8 +104,8 @@ Run migrations:
 
 Rollback migrations:
 
-    compound m down
-    
-    You can also specify schema
+    compound m down - defaults to mysql
+
+    compound m down [version] - defualts to mysql
 
     compound m down [version] [schema]
