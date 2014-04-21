@@ -94,7 +94,7 @@ module.exports = function (compound, schema, models) {
 };
 ```
 
-##Run Migrations(you may specify schema)
+##Run Migrations
 
 Run migrations:
 
