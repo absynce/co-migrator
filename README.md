@@ -47,7 +47,7 @@ Usage
 
     You may also specify the schema(currently defaults to mysql):
 
-    compound m create mongodb
+    compound m create [schema]
     
 A new migration will be saved in `db/migrations/[version]`. If a migration already exists for the current version of the application, a new migration will be incremented from the highest version of the current migration. 
 
@@ -98,12 +98,16 @@ module.exports = function (compound, schema, models) {
 
 Run migrations:
 
-    compound m
-    
+    compound m - defaults to mysql
+
+    compound m up [schema]
+
 Rollback migrations:
 
     compound m down
-    
-    You can also specify schema
 
-    compound m down myql
+    You may also specify version and schema(currently defaults to mysql)
+
+    compound m down [version] 
+
+    compound m down [version] [schema]
