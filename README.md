@@ -104,8 +104,10 @@ Run migrations:
 
 Rollback migrations:
 
-    compound m down - defaults to mysql
+    compound m down
 
-    compound m down [version] - defualts to mysql
+    You may also specify version and schema(currently defaults to mysql)
+
+    compound m down [version] 
 
     compound m down [version] [schema]
