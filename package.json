@@ -1,4 +1,4 @@
-{
+{ 
   "name": "co-migrator",
   "version": "0.0.5",
   "description": "Database migration tool for compound.js",

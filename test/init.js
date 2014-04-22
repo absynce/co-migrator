@@ -28,9 +28,8 @@ before(function (done) {
 
 function loadSchema(compound, done) {
     db = schema(db);
-    compound.orm = {
-        _schemas : [ db ]
-    };
+    compound.orm = {schema: {}};
+    compound.orm.schema[db.name] =  db;
     compound.models = db.models;
     db.automigrate(function () {
         done(compound);
