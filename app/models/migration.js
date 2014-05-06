@@ -8,14 +8,12 @@ module.exports = function (compound, Migration) {
         Migration.maxVersion = function (done) {
             var maxVersion = null;
 
-            Migration.all({where: {active: true}},function (err, migrations) {
+            Migration.all({ where: { active: true }}, function (err, migrations) {
                 if (err) { return done(err); }
                     var versionNames   = migrations.map(function (m) { return m.version; });
                     maxVersion = semver.maxSatisfying(versionNames, ''); // Get highest version.
                     done(null, maxVersion);
             });
         };
-
-
     }
 };
