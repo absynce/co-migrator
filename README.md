@@ -45,7 +45,7 @@ Usage
 
     compound m create
 
-    You may also specify the schema(currently defaults to mysql):
+    You may also specify the schema(defaults to first schema encountered):
 
     compound m create [schema]
     
@@ -98,7 +98,7 @@ module.exports = function (compound, schema, models) {
 
 Run migrations:
 
-    compound m - defaults to mysql
+    compound m - defaults to first schema encountered
 
     compound m up [schema]
 
@@ -106,7 +106,7 @@ Rollback migrations:
 
     compound m down
 
-    You may also specify version and schema(currently defaults to mysql)
+    You may also specify version and schema(defaults to first schema encountered)
 
     compound m down [version] 
 
