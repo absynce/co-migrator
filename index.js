@@ -6,7 +6,7 @@ function init(compound) {
     
     compound.tools.migrator = function m() {
         var action   = process.argv[3] || 'up';
-        var schema   = process.argv.length > 5 ? process.argv[5] : process.argv[4] || 'mysql';
+        var schema   = process.argv.length > 5 ? process.argv[5] : process.argv[4] || null;
         var migrator = new Migrator(compound, schema);
         switch (action) {
         case 'up'   :
