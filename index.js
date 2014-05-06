@@ -6,11 +6,12 @@ function init(compound) {
     
     compound.tools.migrator = function m() {
         var action   = process.argv[3] || 'up';
-        var migrator = new Migrator(compound);
+        var schema   = process.argv.length > 5 ? process.argv[5] : process.argv[4] || null;
+        var migrator = new Migrator(compound, schema);
         switch (action) {
         case 'up'   :
         case 'down' :
-            var toVersion = process.argv.length > 4 ? process.argv[4] : null;
+            var toVersion = process.argv.length > 5 ? process.argv[4] : process.argv[5] || null;
             migrator.runMigrations(toVersion, action, exitProcess);
             break;
         case 'create':
