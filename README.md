@@ -41,11 +41,11 @@ module.exports = require('co-migrator').Models.Migration;
 Usage
 =====
 
-##Create a new migration:
+## Create a new migration:
 
     compound m create
 
-    You may also specify the schema(defaults to first schema encountered):
+You may also specify the schema(defaults to first schema encountered):
 
     compound m create [schema]
     
@@ -55,7 +55,7 @@ Example:
 
 If the application is on version `1.2.3` and a migration is in `db/migrations/1.2/1.2.3` called `1.2.3-mig.1.js`, a new migration `1.2.3-mig.2.js` will be placed in the same directory.
 
-##Migration example:
+## Migration example:
 
 `db/schemas/post.js`:
 ```javascript
@@ -94,7 +94,7 @@ module.exports = function (compound, schema, models) {
 };
 ```
 
-##Run Migrations
+## Run Migrations
 
 Run migrations:
 
@@ -106,7 +106,7 @@ Rollback migrations:
 
     compound m down
 
-    You may also specify version and schema(defaults to first schema encountered)
+You may also specify version and schema (defaults to first schema encountered):
 
     compound m down [version] 
 
